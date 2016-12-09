@@ -54,6 +54,8 @@ DEFINE_string(texture1_filepath, "texture1.bmp",
               "Filepath of the first texture.");
 DEFINE_string(texture2_filepath, "texture2.bmp",
               "Filepath of the second texture.");
+DEFINE_string(texture2_filepath, "texture3.bmp",
+              "Filepath of the third texture.");
 
 // Annonymous namespace for constants and helper functions.
 namespace {
@@ -412,7 +414,8 @@ int main(int argc, char** argv) {
 
   GLuint texture_ids[2];
   texture_ids[0] = LoadTexture(FLAGS_texture1_filepath);
-  texture_ids[1] = LoadTexture(FLAGS_texture1_filepath);
+  texture_ids[1] = LoadTexture(FLAGS_texture2_filepath);
+  texture_ids[2] = LoadTexture(FLAGS_texture3_filepath);
 
   // Construct the camera projection matrix.
   const float field_of_view = wvu::ConvertDegreesToRadians(45.0f);
