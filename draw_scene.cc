@@ -227,7 +227,7 @@ void RenderScene(const wvu::ShaderProgram& shader_program,
 
 
 void ConstructModels(std::vector<Model*>* models_to_draw) {
-  //Square Pyramid
+  //Square Pyramid 1
   std::vector<GLuint> indices = {
     0, 3, 2,
     0, 2, 1,
@@ -245,15 +245,15 @@ void ConstructModels(std::vector<Model*>* models_to_draw) {
   vertices.block(3, 1, 3, 1) = Eigen::Vector3f(0.0f, 1.0f, 0.0f);
   vertices.block(6, 1, 2, 1) = Eigen::Vector2f(0, 1);
   // Pryamid Vertex 2.
-  vertices.block(0, 2, 3, 1) = Eigen::Vector3f(2.0f, 0.0f, 2.0f);
+  vertices.block(0, 2, 3, 1) = Eigen::Vector3f(2.0f, 0.0f, -2.0f);
   vertices.block(3, 2, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, 1.0f);
   vertices.block(6, 2, 2, 1) = Eigen::Vector2f(1, 0);
   // Pryamid Vertex 3.
-  vertices.block(0, 3, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, 2.0f);
+  vertices.block(0, 3, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, -2.0f);
   vertices.block(3, 3, 3, 1) = Eigen::Vector3f(1.0f, 0.0f, 0.0f);
   vertices.block(6, 3, 2, 1) = Eigen::Vector2f(1, 1);
   // Pryamid Vertex 3.
-  vertices.block(0, 4, 3, 1) = Eigen::Vector3f(1.0f, 2.0f, 1.0f);
+  vertices.block(0, 4, 3, 1) = Eigen::Vector3f(1.0f, 2.0f, -1.0f);
   vertices.block(3, 4, 3, 1) = Eigen::Vector3f(0.0f, 1.0f, 0.0f);
   vertices.block(6, 4, 2, 1) = Eigen::Vector2f(0, 0);
 
@@ -312,6 +312,40 @@ void ConstructModels(std::vector<Model*>* models_to_draw) {
   Model* cube = new Model(Eigen::Vector3f(1.0f, 1.0f, 1.0f), Eigen::Vector3f(1.0f, -1.0f, -15.0f), vertices2, indices2);
   cube->SetVerticesIntoGpu();
   models_to_draw->push_back(cube);
+
+  //Square Pyramid2
+  std::vector<GLuint> indices3 = {
+    0, 3, 2,
+    0, 2, 1,
+    0, 4, 1,
+    0, 3, 4,
+    3, 2, 4,
+    2, 1, 4};
+  Eigen::MatrixXf vertices3(8, 5);
+  // Pryamid Vertex 0.
+  vertices3.block(0, 0, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, 0.0f);
+  vertices3.block(3, 0, 3, 1) = Eigen::Vector3f(1.0f, 0.0f, 0.0f);
+  vertices3.block(6, 0, 2, 1) = Eigen::Vector2f(0, 0);
+  // Pryamid Vertex 1.
+  vertices3.block(0, 1, 3, 1) = Eigen::Vector3f(-2.0f, 0.0f, 0.0f);
+  vertices3.block(3, 1, 3, 1) = Eigen::Vector3f(0.0f, 1.0f, 0.0f);
+  vertices3.block(6, 1, 2, 1) = Eigen::Vector2f(0, 1);
+  // Pryamid Vertex 2.
+  vertices3.block(0, 2, 3, 1) = Eigen::Vector3f(-2.0f, 0.0f, -2.0f);
+  vertices3.block(3, 2, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, 1.0f);
+  vertices3.block(6, 2, 2, 1) = Eigen::Vector2f(1, 0);
+  // Pryamid Vertex 3.
+  vertices3.block(0, 3, 3, 1) = Eigen::Vector3f(0.0f, 0.0f, -2.0f);
+  vertices3.block(3, 3, 3, 1) = Eigen::Vector3f(1.0f, 0.0f, 0.0f);
+  vertices3.block(6, 3, 2, 1) = Eigen::Vector2f(1, 1);
+  // Pryamid Vertex 3.
+  vertices3.block(0, 4, 3, 1) = Eigen::Vector3f(-1.0f, 2.0f, -1.0f);
+  vertices3.block(3, 4, 3, 1) = Eigen::Vector3f(0.0f, 1.0f, 0.0f);
+  vertices3.block(6, 4, 2, 1) = Eigen::Vector2f(0, 0);
+
+  Model* pyramid2 = new Model(Eigen::Vector3f(1.0f, 1.0f, 1.0f), Eigen::Vector3f(-3.0f, -1.0f, -15.0f), vertices3, indices3);
+  pyramid2->SetVerticesIntoGpu();
+  models_to_draw->push_back(pyramid2);
 }
 
 void DeleteModels(std::vector<Model*>* models_to_draw) {
@@ -377,8 +411,8 @@ int main(int argc, char** argv) {
   ConstructModels(&models_to_draw);
 
   GLuint texture_ids[2];
-  texture_ids[0] = LoadTexture("texture1.bmp");
-  texture_ids[1] = LoadTexture("texture2.bmp");
+  texture_ids[0] = LoadTexture(FLAGS_texture1_filepath);
+  texture_ids[1] = LoadTexture(FLAGS_texture1_filepath);
 
   // Construct the camera projection matrix.
   const float field_of_view = wvu::ConvertDegreesToRadians(45.0f);

@@ -76,7 +76,7 @@ Model::~Model() {
 Eigen::Matrix4f Model::ComputeModelMatrix() {
   const float angle = orientation_.norm();
   Eigen::Matrix4f rotation = ComputeRotationMatrix(orientation_.normalized(), angle);
-  Eigen::Matrix4f translation = ComputeTranslation(Eigen::Vector3f(
+  Eigen::Matrix4f translation = ComputeTranslationMatrix(Eigen::Vector3f(
 													1.0f*sin(static_cast<GLfloat>(glfwGetTime())),
 													-2.0f, -8.0f));
   Eigen::Matrix4f model_matrix = translation * rotation;
